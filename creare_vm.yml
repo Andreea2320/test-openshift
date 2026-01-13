@@ -18,7 +18,7 @@
             name: "{{ vm_name }}"
             namespace: "{{ target_ns }}"
           spec:
-            running: true # Aceasta porneste VM-ul imediat
+            running: true
             template:
               spec:
                 domain:
@@ -33,4 +33,4 @@
                 volumes:
                   - name: containerdisk
                     containerdisk:
-                      image: quay.io/containerdisks/fedora:latest # Imagine gata de boot
+                      image: quay.io/containerdisks/fedora:latest
