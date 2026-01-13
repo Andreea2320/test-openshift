@@ -3,12 +3,11 @@
   hosts: localhost
   connection: local
   gather_facts: false
-
   tasks:
-    - name: Creeaza resursa VM folosind varianta Raw
+    - name: Task VM
       kubernetes.core.k8s:
         state: present
-        definition: |
+        definition:
           apiVersion: kubevirt.io/v1
           kind: VirtualMachine
           metadata:
@@ -21,13 +20,13 @@
                 domain:
                   devices:
                     disks:
-                      - disk:
-                          bus: virtio
-                        name: containerdisk
+                    - disk:
+                        bus: virtio
+                      name: rootv
                   resources:
                     requests:
                       memory: 2Gi
                 volumes:
-                  - name: containerdisk
-                    containerdisk:
-                      image: quay.io/containerdisks/fedora:latest
+                - name: rootv
+                  containerdisk:
+                    image: quay.io/containerdisks/fedora:latest
