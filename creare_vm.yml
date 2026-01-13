@@ -3,20 +3,17 @@
   hosts: localhost
   connection: local
   gather_facts: false
-  vars:
-    vm_name: "test-vm-ansible"
-    target_ns: "test"
 
   tasks:
-    - name: Creeaza resursa VM
+    - name: Creeaza resursa VM folosind varianta Raw
       kubernetes.core.k8s:
         state: present
-        definition:
+        definition: |
           apiVersion: kubevirt.io/v1
           kind: VirtualMachine
           metadata:
-            name: "{{ vm_name }}"
-            namespace: "{{ target_ns }}"
+            name: test-vm-ansible
+            namespace: test
           spec:
             running: true
             template:
