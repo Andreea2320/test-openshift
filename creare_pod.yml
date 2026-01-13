@@ -1,0 +1,27 @@
+---
+- name: Creare Pod Nginx in OpenShift
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    pod_name: "test-nginx-pod"
+    target_ns: "test"
+
+  tasks:
+    - name: Creeaza un Pod simplu cu Nginx
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: v1
+          kind: Pod
+          metadata:
+            name: "{{ pod_name }}"
+            namespace: "{{ target_ns }}"
+            labels:
+              app: nginx
+          spec:
+            containers:
+              - name: nginx-container
+                image: bitnami/nginx:latest
+                ports:
+                  - containerPort: 8080
