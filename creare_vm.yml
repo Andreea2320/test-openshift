@@ -5,7 +5,8 @@
   gather_facts: false
   vars:
     vm_name: "web-server-nginx"
-    namespace: "test" 
+    # Schimbăm numele variabilei din 'namespace' în 'target_namespace' pentru a evita eroarea
+    target_namespace: "test" 
 
   tasks:
     - name: Creeaza resursa VM din template-ul KubeVirt
@@ -16,7 +17,7 @@
           kind: VirtualMachine
           metadata:
             name: "{{ vm_name }}"
-            namespace: "{{ namespace }}"
+            namespace: "{{ target_namespace }}"
           spec:
             running: true
             template:
@@ -26,7 +27,7 @@
                     disks:
                       - disk:
                           bus: virtio
-                        name: rootdisk
+                        name: rootdisk # Acest nume trebuie să fie identic cu cel de la volumes
                   resources:
                     requests:
                       memory: 2Gi
