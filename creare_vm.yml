@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   tasks:
-    - name: Task VM
+    - name: Task VM Final - Cu Memorie Definita
       kubernetes.core.k8s:
         state: present
         definition:
@@ -18,6 +18,9 @@
             template:
               spec:
                 domain:
+                  resources:
+                    requests:
+                      memory: 2Gi # Aceasta este linia care repara eroarea ta
                   devices:
                     disks:
                       - disk:
