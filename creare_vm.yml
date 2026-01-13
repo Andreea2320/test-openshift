@@ -1,0 +1,36 @@
+---
+- name: Creare Masina Virtuala in OpenShift
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    vm_name: "web-server-nginx"
+    namespace: "test" 
+
+  tasks:
+    - name: Creeaza resursa VM din template-ul KubeVirt
+      kubernetes.core.k8s:
+        state: present
+        definition:
+          apiVersion: kubevirt.io/v1
+          kind: VirtualMachine
+          metadata:
+            name: "{{ vm_name }}"
+            namespace: "{{ namespace }}"
+          spec:
+            running: true
+            template:
+              spec:
+                domain:
+                  devices:
+                    disks:
+                      - disk:
+                          bus: virtio
+                        name: rootdisk
+                  resources:
+                    requests:
+                      memory: 2Gi
+                volumes:
+                  - name: rootdisk
+                    containerdisk:
+                      image: quay.io/containerdisks/fedora:latest
