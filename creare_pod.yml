@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   vars:
-    pod_name: "test-nginx-pod"
+    pod_name: "test-nginx-pod2"
     target_ns: "test"
 
   tasks:
