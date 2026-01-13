@@ -4,12 +4,11 @@
   connection: local
   gather_facts: false
   vars:
-    vm_name: "web-server-nginx"
-    # Am schimbat numele din 'namespace' in 'target_ns' ca sa nu mai dea Warning
-    target_ns: "test" 
+    vm_name: "test-vm-ansible"
+    target_ns: "test"
 
   tasks:
-    - name: Creeaza resursa VM din template-ul KubeVirt
+    - name: Creeaza resursa VM
       kubernetes.core.k8s:
         state: present
         definition:
@@ -19,7 +18,7 @@
             name: "{{ vm_name }}"
             namespace: "{{ target_ns }}"
           spec:
-            running: true
+            running: true # Aceasta porneste VM-ul imediat
             template:
               spec:
                 domain:
@@ -27,11 +26,11 @@
                     disks:
                       - disk:
                           bus: virtio
-                        name: rootdisk
+                        name: containerdisk
                   resources:
                     requests:
                       memory: 2Gi
                 volumes:
-                  - name: rootdisk
+                  - name: containerdisk
                     containerdisk:
-                      image: quay.io/containerdisks/fedora:latest
+                      image: quay.io/containerdisks/fedora:latest # Imagine gata de boot
