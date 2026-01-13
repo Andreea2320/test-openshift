@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   tasks:
-    - name: Task VM
+    - name: Task VM Final
       kubernetes.core.k8s:
         state: present
         definition:
@@ -20,13 +20,10 @@
                 domain:
                   devices:
                     disks:
-                    - disk:
-                        bus: virtio
-                      name: rootv
-                  resources:
-                    requests:
-                      memory: 2Gi
+                      - disk:
+                          bus: virtio
+                        name: disk0
                 volumes:
-                - name: rootv
-                  containerdisk:
-                    image: quay.io/containerdisks/fedora:latest
+                  - name: disk0
+                    containerDisk:
+                      image: quay.io/containerdisks/fedora:latest
